@@ -1,6 +1,7 @@
 #include<iostream>
 #include<vector>
 #include<cstring>
+#include<algorithm>
 using namespace std;
 
 struct lesson{
@@ -16,7 +17,9 @@ string field;
 double GPA;
 vector <lesson> lessons;
 };
-
+bool list(student &a, student &b){
+ return a.GPA > b.GPA ;
+}
   void addlesson(lesson & l,student &s){
 
   cout<<"Enter name of lesson :";
@@ -54,7 +57,12 @@ vector <lesson> lessons;
     cout<<" had done compeletly !";
 
      }      
-         
+
+    show(vector <student>students){
+       
+
+    } 
+
 int main(){
 int n,num;
 vector <student> students;
@@ -78,6 +86,11 @@ case 1:{
     }
     }
     break;
+    case 2 : {
+     sort(students.begin(),students.end(),list);
+      show(students);
+
+    }
 default:
     break;
 }
