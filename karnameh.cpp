@@ -40,16 +40,21 @@ bool list(student &a, student &b){
    cin.ignore();
    getline(cin,s.name);
    if(!(getline(cin,s.name))){
+   punch1: 
    cout <<"\nEnter ID :\n";
    cin>>s.ID;
    if(cin>>s.ID){
+   punch2 :
    cout <<"\nEnter field :\n";
    cin>> s.field;
+   if(!(cin>> s.field)){
    s.GPA =0;
    cout<<"\n------------------------------------\n";
    int numlesson;
+   punch3:
    cout<<" Enter number of lessons :";
    cin>> numlesson;
+   if(cin>> numlesson){
    for(int i=0 ; i<numlesson ; i++){
    lesson l;
    addlesson(l,s);
@@ -61,6 +66,18 @@ bool list(student &a, student &b){
     cout<<"---------------------------------------\n";
     cout<<" had done compeletly !\n\n";
    }
+   else{
+     cout<<"wrong answer.return again"  ;
+      goto punch3;}
+   }
+   else{
+     cout<<"wrong answer.return again"  ;
+      goto punch2;}
+     
+   }
+       else{
+     cout<<"wrong answer.return again"  ;
+      goto punch1;}
      }    
      else{
      cout<<"wrong answer.return again"  ;
@@ -98,18 +115,24 @@ bool list(student &a, student &b){
     
     void reportCard(string &name, int& sID, vector<student>students)
     {
+      bool check=false;
       cout << "\n----------------------------------------\n";
      for (int i =0 ; i< students.size() ; i++){
       if (name == students[i].name && sID == students[i].ID){
+        check=true;
         cout << "Name: " << students[i].name << setw(10) << right << "ID: " << students[i].ID << endl;
             cout << setw(15) << left << "| Lesson |" << setw(15) << "| Credit |" << setw(15) << "| Point |" << endl;
             for (int j =0 ; j < students[i].lessons.size(); j++) {
                  cout << setw(15) << left << students[i].lessons[j].Lname  << setw(15) << students[i].lessons[j].credit<< setw(15) << students[i].lessons[j].point <<"\n";
             }
      }
-     else
-       cout<<"\nNOT FOUND !!";
+    
      }
+     if (!check)
+     {
+      cout<<"NOT FOUND !";
+     }
+     
      }
 int main(){
 int n,num,sID;
@@ -117,7 +140,7 @@ string spece,name;
 vector <student> students;
 do 
 {
-   
+   lbl:
  cout<<"Enter your number of your choice:";
  cout<<"\n=======================================\n";
  cout << "(1): add student\n(2): list of student\n(3): list by field\n(4): report card\n(5): exit";
@@ -165,8 +188,16 @@ case 1:{
       reportCard(name,sID,students);
       break;
     }
+    case 5 :
+    {
+      cout<<"Bro be darak";
+      exit(0);
+    }
 default:
-    break;
+    {
+      cout<<"Wrong answer. try again";
+      goto lbl;
+    }
 }
 
 
