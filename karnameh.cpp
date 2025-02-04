@@ -1,14 +1,15 @@
 #include<iostream>
 #include<vector>
 #include <iomanip>
-#include<cstring>
+#include<string>
 #include<algorithm>
+#include<limits>
 using namespace std;
 
 struct lesson {
- string Lname;
- int credit;
-   double point;
+    string Lname;
+    int credit;
+    double point;
 };
 
 struct student {
@@ -16,77 +17,99 @@ struct student {
     int ID;
     string field;
     double GPA;
-    vector <lesson> lessons;
+    vector<lesson> lessons;
 };
 
-bool list(student &a, student &b) {
+bool list(const student &a, const student &b) {
     return a.GPA > b.GPA;
 }
 
 void addlesson(lesson &l, student &s) {
     cout << "\nEnter name of lesson :\n";
     cin >> l.Lname;
+   judge :
     cout << "Enter count of credits :\n";
     cin >> l.credit;
+    if(cin.fail()){
+      cout<<"WRONG ANSWER !!,ENter the correct num of credit";
+       
+           cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        
+          
+      goto judge;
+    }
+    judge2:
     cout << "Enter point of lesson\n";
     cin >> l.point;
-    s.GPA += (l.point * l.credit);  
+    if( cin.fail()){
+      cout<<"WRONG ANSWER !. Enter the correct point";
+       
+           cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        
+           
+      goto judge2;
+    }
+    s.GPA += (l.point * l.credit);
 }
 
 void addstude(student &s) {
-punch:
     cout << "\nEnter name :\n";
     cin.ignore();
     getline(cin, s.name);
-    if (!(getline(cin, s.name))) {
-    punch1:
-        cout << "\nEnter ID :\n";
-        cin >> s.ID;
-        if (cin >> s.ID) {
-        punch2:
-            cout << "\nEnter field :\n";
-            cin >> s.field;
-            if (!(cin >> s.field)) {
-                s.GPA = 0;
-                cout << "\n------------------------------------\n";
-                int numlesson;
-            punch3:
-                cout << "Enter number of lessons :";
-                cin >> numlesson;
-                if (cin >> numlesson) {
-                    for (int i = 0; i < numlesson; i++) {
-                        lesson l;
-                        addlesson(l, s);
-                        s.lessons.push_back(l);
-                    }
+    rule2:
+    cout << "\nEnter ID :\n";
+    cin >> s.ID;
+    if (cin.fail()) {
+        cout << "Wrong answer. Enter the ID again:\n";
+          
+           cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        
+           
+       goto rule2;
 
-                    s.GPA /= numlesson;  
-                    cout << "---------------------------------------\n";
-                    cout << "Had done completely!\n\n";
-                }
-                else {
-                    cout << "Wrong answer. Return again\n";
-                    goto punch3;
-                }
-            }
-            else {
-                cout << "Wrong answer. Return again\n";
-                goto punch2;
-            }
-
-        }
-        else {
-            cout << "Wrong answer. Return again\n";
-            goto punch1;
-        }
     }
-    else {
-        cout << "Wrong answer. Return again\n";
-        goto punch;
+    rule1 :
+    cout << "\nEnter field :\n";
+    cin >> s.field;
+    if(cin.fail()) {
+        cout << "Wrong answer. Enter the field again:\n";
+         
+           cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        
+             
+        goto rule1;
     }
+    s.GPA = 0;
+    cout << "\n------------------------------------\n";
+    int numlesson;
+    rule:
+    cout << "Enter number of lessons :";
+    cin >> numlesson;
+    if (cin.fail()) {
+        cout << "Wrong answer. Enter the number of lessons again:\n";
+         
+         
+           cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        
+           
+        goto rule;
+    }
+    for (int i = 0; i < numlesson; i++) {
+        lesson l;
+        addlesson(l, s);
+        s.lessons.push_back(l);
+    }
+    s.GPA /= numlesson;
+    cout << "---------------------------------------\n";
+    cout << "Had done completely!\n\n";
 }
 
-void show(vector <student> students) {
+void show(const vector<student> &students) {
     cout << "\n________________________________________\n";
     cout << left << setw(15) << "| Name |" << setw(15) << "| ID |" << setw(15) << "| Field  |" << setw(10) << "| GPA |" << endl;
     cout << "----------------------------------------\n";
@@ -94,10 +117,9 @@ void show(vector <student> students) {
         cout << left << setw(15) << " | " << students[i].name << setw(15) << " | " << students[i].ID << setw(15) << " | " << students[i].field << setw(10) << fixed << setprecision(2) << " | " << students[i].GPA << " |";
         cout << "\n----------------------------------------\n\n";
     }
-
 }
 
-void speceficField(string &spece, vector<student> &students) {
+void speceficField(string &spece, const vector<student> &students) {
     bool test = false;
     cout << left << setw(15) << "| Name |" << setw(15) << "| ID |" << setw(15) << "| Field  |" << setw(10) << "| GPA |" << endl;
     for (int i = 0; i < students.size(); i++) {
@@ -112,7 +134,7 @@ void speceficField(string &spece, vector<student> &students) {
     }
 }
 
-void reportCard(string &name, int& sID, vector<student> students) {
+void reportCard(string &name, int& sID, const vector<student> &students) {
     bool check = false;
     cout << "\n----------------------------------------\n";
     for (int i = 0; i < students.size(); i++) {
@@ -128,68 +150,83 @@ void reportCard(string &name, int& sID, vector<student> students) {
     if (!check) {
         cout << "NOT FOUND!\n";
     }
-
 }
 
 int main() {
     int n, num, sID;
     string spece, name;
-    vector <student> students;
+    vector<student> students;
     do {
     lbl:
         cout << "Enter your number of your choice:";
         cout << "\n=======================================\n";
         cout << "(1): Add student\n(2): List of students\n(3): List by field\n(4): Report card\n(5): Exit\n";
         cout << "=======================================\n";
-        cin >> n;
+        cin>>n;
+        if (cin.fail()) {
+         cout<<"WRONG ANSWER !. Enter the number of choice again.\n";
+           cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        
+             goto lbl;
+        }
+        else{
+            switch (n) {
+                case 1: {
+                jump:
+                    cout << "Enter number of students:\n";
+                    cin >> num;
+                    if(cin.fail()){
+                        cout << "Wrong answer. Enter the number of students again:\n";
+                         
+         cout<<"WRONG ANSWER !. Enter the number of choice again.\n";
+           cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        
+           
+                        goto jump;
 
-        switch (n) {
-        case 1: {
-            jump:
-                cout << "Enter number of students:\n";
-                cin >> num;
-                if (cin >> num) {
+                    }
                     for (int i = 0; i < num; i++) {
                         student s;
                         addstude(s);
                         students.push_back(s);
                     }
                 }
-                else {
-                    cout << "Wrong answer. Return again\n";
-                    goto jump;
+                break;
+                case 2: {
+                    sort(students.begin(), students.end(), list);
+                    show(students);
+                    break;
                 }
-        }
-        break;
-        case 2: {
-            sort(students.begin(), students.end(), list);
-            show(students);
-            break;
-        }
-        case 3: {
-            cout << "\nEnter your specific field:\n";
-            cin >> spece;
-            speceficField(spece, students);
-            break;
-        }
-        case 4: {
-            cout << "Enter the student name:\n";
-            cin >> name;
-            cout << "\nEnter the student ID:\n";
-            cin >> sID;
-            reportCard(name, sID, students);
-            break;
-        }
-        case 5: {
-            cout << "Bro be darak\n";
-            exit(0);
-        }
-        default: {
-            cout << "Wrong answer. Try again\n";
-            goto lbl;
-        }
-        }
+                case 3: {
+                    cout << "\nEnter your specific field:\n";
+                    cin >> spece;
+                    speceficField(spece, students);
+                    break;
+                }
+                case 4: {
+                    cout << "Enter the student name:\n";
+                    cin >> name;
+                    cout << "\nEnter the student ID:\n";
+                    cin >> sID;
+                    reportCard(name, sID, students);
+                    break;
+                }
+                case 5: {
+                    cout << "Bro be darak\n";
+                    exit(0);
+                }
+                default: {
+                    cout << "Wrong answer. Try again\n";
 
+                    goto lbl;
+                }
+            }
+        
+        
+        }
     } while (n != 5);
 
+    return 0;
 }
