@@ -179,7 +179,7 @@ int main() {
                     if(cin.fail()){
                         cout << "Wrong answer. Enter the number of students again:\n";
                          
-         cout<<"WRONG ANSWER !. Enter the number of choice again.\n";
+         
            cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
         
