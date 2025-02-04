@@ -31,7 +31,7 @@ void addlesson(lesson &l, student &s) {
     cout << "Enter count of credits :\n";
     cin >> l.credit;
     if(cin.fail()){
-      cout<<"WRONG ANSWER !!,ENter the correct num of credit";
+      cout<<"WRONG ANSWER !!,Try again";
        
            cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -43,7 +43,7 @@ void addlesson(lesson &l, student &s) {
     cout << "Enter point of lesson\n";
     cin >> l.point;
     if( cin.fail()){
-      cout<<"WRONG ANSWER !. Enter the correct point";
+      cout<<"WRONG ANSWER !.Try again";
        
            cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -55,14 +55,14 @@ void addlesson(lesson &l, student &s) {
 }
 
 void addstude(student &s) {
-    cout << "\nEnter name :\n";
+    cout << "\nEnter student's name :\n";
     cin.ignore();
     getline(cin, s.name);
     rule2:
     cout << "\nEnter ID :\n";
     cin >> s.ID;
     if (cin.fail()) {
-        cout << "Wrong answer. Enter the ID again:\n";
+        cout << "Wrong answer.Try again\n";
           
            cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -75,7 +75,7 @@ void addstude(student &s) {
     cout << "\nEnter field :\n";
     cin >> s.field;
     if(cin.fail()) {
-        cout << "Wrong answer. Enter the field again:\n";
+        cout << "Wrong answer. Try again\n";
          
            cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -87,10 +87,10 @@ void addstude(student &s) {
     cout << "\n------------------------------------\n";
     int numlesson;
     rule:
-    cout << "Enter number of lessons :";
+    cout << "Enter number of lessons :\n";
     cin >> numlesson;
     if (cin.fail()) {
-        cout << "Wrong answer. Enter the number of lessons again:\n";
+        cout << "Wrong answer. Try again\n";
          
          
            cin.clear();
@@ -114,7 +114,7 @@ void show(const vector<student> &students) {
     cout << left << setw(15) << "| Name |" << setw(15) << "| ID |" << setw(15) << "| Field  |" << setw(10) << "| GPA |" << endl;
     cout << "----------------------------------------\n";
     for (int i = 0; i < students.size(); i++) {
-        cout << left << setw(15) << " | " << students[i].name << setw(15) << " | " << students[i].ID << setw(15) << " | " << students[i].field << setw(10) << fixed << setprecision(2) << " | " << students[i].GPA << " |";
+        cout << left << setw(15) << " | " <<setw(15)<< students[i].name << setw(15) << " | " << students[i].ID << setw(15) << " | " << students[i].field << setw(10) << fixed << setprecision(2) << " | " << students[i].GPA << " |";
         cout << "\n----------------------------------------\n\n";
     }
 }
@@ -164,7 +164,7 @@ int main() {
         cout << "=======================================\n";
         cin>>n;
         if (cin.fail()) {
-         cout<<"WRONG ANSWER !. Enter the number of choice again.\n";
+         cout<<"WRONG ANSWER !.Try again\n";
            cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
         
@@ -177,9 +177,9 @@ int main() {
                     cout << "Enter number of students:\n";
                     cin >> num;
                     if(cin.fail()){
-                        cout << "Wrong answer. Enter the number of students again:\n";
+                        cout << "Wrong answer. Try again\n";
                          
-         cout<<"WRONG ANSWER !. Enter the number of choice again.\n";
+        
            cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
         
