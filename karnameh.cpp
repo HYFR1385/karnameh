@@ -158,6 +158,8 @@ void reportCard(string &name, int& sID, const vector<student> &students) {
                      << " |\n";
             }
             cout << "+--------------+--------+--------+\n";
+            cout<<"GPA :"<<s.GPA;
+            cout << "+--------------+--------+--------+\n";
         }
     }
     if (!check) cout << "NOT FOUND!\n";
@@ -217,6 +219,7 @@ int main() {
                 }
                 case 4: {
                     cout << "Enter the student name:\n";
+                    cin.ignore();
                     getline(cin,name);
                     cout << "\nEnter the student ID:\n";
                     cin >> sID;
