@@ -108,50 +108,60 @@ void addstude(student &s) {
     cout << "---------------------------------------\n";
     cout << "Had done completely!\n\n";
 }
-
 void show(const vector<student> &students) {
-    cout << "\n________________________________________\n";
-    cout << left << setw(15) << "| Name |" << setw(15) << "| ID |" << setw(15) << "| Field  |" << setw(10) << "| GPA |" << endl;
-    cout << "----------------------------------------\n";
-    for (int i = 0; i < students.size(); i++) {
-        cout << left << setw(15) << " | " <<setw(15)<< students[i].name << setw(15) << " | " << students[i].ID << setw(15) << " | " << students[i].field << setw(10) << fixed << setprecision(2) << " | " << students[i].GPA << " |";
-        cout << "\n----------------------------------------\n\n";
+    cout << "\n+---------------+---------------+---------------+----------+\n";
+    cout << "| Name          | ID            | Field         | GPA      |\n";
+    cout << "+---------------+---------------+---------------+----------+\n";
+    for (const auto& s : students) {
+        cout << "| " << setw(13) << left << s.name
+             << "| " << setw(13) << s.ID
+             << "| " << setw(13) << s.field
+             << "| " << setw(8) << fixed << setprecision(2) << s.GPA << " |\n";
     }
+    cout << "+---------------+---------------+---------------+----------+\n";
 }
 
 void speceficField(string &spece, const vector<student> &students) {
     bool test = false;
-    cout << left << setw(15) << "| Name |" << setw(15) << "| ID |" << setw(15) << "| Field  |" << setw(10) << "| GPA |" << endl;
-    for (int i = 0; i < students.size(); i++) {
-        cout << "\n----------------------------------------\n";
-        if (spece == students[i].field) {
-            cout << left << setw(15) << " | " << students[i].name << setw(15) << " | " << students[i].ID << setw(15) << " | " << students[i].field << setw(10) << fixed << setprecision(2) << " | " << students[i].GPA << " |";
+    cout << "\n+---------------+---------------+---------------+----------+\n";
+    cout << "| Name          | ID            | Field         | GPA      |\n";
+    cout << "+---------------+---------------+---------------+----------+\n";
+
+    for (const auto& s : students) {
+        if (spece == s.field) {
+            cout << "| " << setw(13) << left << s.name
+                 << "| " << setw(13) << s.ID
+                 << "| " << setw(13) << s.field
+                 << "| " << setw(8) << fixed << setprecision(2) << s.GPA << " |\n";
             test = true;
         }
     }
-    if (!test) {
-        cout << "Not Found!\n";
-    }
+    cout << "+---------------+---------------+---------------+----------+\n";
+
+    if (!test) cout << "Not Found!\n";
 }
 
 void reportCard(string &name, int& sID, const vector<student> &students) {
     bool check = false;
-    cout << "\n----------------------------------------\n";
-    for (int i = 0; i < students.size(); i++) {
-        if (name == students[i].name && sID == students[i].ID) {
+    for (const auto& s : students) {
+        if (name == s.name && sID == s.ID) {
             check = true;
-            cout << "Name: " << students[i].name << setw(10) << right << "ID: " << students[i].ID << endl;
-            cout << setw(15) << left << "| Lesson |" << setw(15) << "| Credit |" << setw(15) << "| Point |" << endl;
-            for (int j = 0; j < students[i].lessons.size(); j++) {
-                cout << setw(15) << left << students[i].lessons[j].Lname << setw(15) << students[i].lessons[j].credit << setw(15) << students[i].lessons[j].point << "\n";
+            cout << "\n+----------------------+--------+\n";
+            cout << "| Name: " << setw(19) << left << s.name << "| ID: " << setw(6) << s.ID << " |\n";
+            cout << "+----------------------+--------+\n";
+            cout << "| Lesson        | Credit | Point  |\n";
+            cout << "+--------------+--------+--------+\n";
+            for (const auto& l : s.lessons) {
+                cout << "| " << setw(12) << left << l.Lname
+                     << "| " << setw(6) << l.credit
+                     << "| " << setw(6) << fixed << setprecision(2) << l.point
+                     << " |\n";
             }
+            cout << "+--------------+--------+--------+\n";
         }
     }
-    if (!check) {
-        cout << "NOT FOUND!\n";
-    }
+    if (!check) cout << "NOT FOUND!\n";
 }
-
 int main() {
     int n, num, sID;
     string spece, name;
@@ -207,7 +217,7 @@ int main() {
                 }
                 case 4: {
                     cout << "Enter the student name:\n";
-                    cin >> name;
+                    getline(cin,name);
                     cout << "\nEnter the student ID:\n";
                     cin >> sID;
                     reportCard(name, sID, students);
